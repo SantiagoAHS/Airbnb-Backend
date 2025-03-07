@@ -5,19 +5,14 @@ from .serializers import PropertiesDetailSerializer
 from .forms import PropertyForm
 
 @api_view(['GET'])
-@authentication_classes([])  # Aquí puedes agregar autenticación si es necesario
-@permission_classes([])  # Aquí puedes agregar permisos si es necesario
-def properties_detail(request, property_id):
-    try:
-        property = Property.objects.get(id=property_id)  # Obtén la propiedad por ID
-    except Property.DoesNotExist:
-        return JsonResponse({'error': 'Property not found'}, status=404)
+@authentication_classes([])
+@permission_classes([])
+def properties_detail(request, pk):
+    property = Property.objects.get(pk=pk)
 
-    serializer = PropertiesDetailSerializer(property)  # No se usa 'many=True' aquí
+    serializer = PropertiesDetailSerializer(property, many=False)
 
-    return JsonResponse({
-        'data': serializer.data
-    })
+    return JsonResponse(serializer.data)
 
 @api_view(['GET'])
 @authentication_classes([])  # Aquí puedes agregar autenticación si es necesario
