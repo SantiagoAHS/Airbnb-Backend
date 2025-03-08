@@ -5,12 +5,11 @@ from dj_rest_auth.registration.views import RegisterView
 from dj_rest_auth.views import LoginView, LogoutView, UserDetailsView
 from rest_framework_simplejwt.views import TokenVerifyView
 
-# Si no estás usando "api" en tus rutas, puedes eliminar la siguiente línea:
-# from . import api
+from . import api
 
 urlpatterns = [
     path('register/', RegisterView.as_view(), name='rest_register'),
     path('login/', LoginView.as_view(), name='rest_login'),
     path('logout/', LogoutView.as_view(), name='rest_logout'),
-    # Aquí puedes añadir más rutas según sea necesario.
+    path('<uuid:pk>/', api.landlord_detail, name='api_landlrod_detail'),
 ]

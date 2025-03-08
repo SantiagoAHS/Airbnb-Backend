@@ -11,6 +11,12 @@ from .serializers import PropertiesListSerializer, PropertiesDetailSerializer, R
 @permission_classes([])  # Aquí puedes agregar permisos si es necesario
 def properties_list(request):
     properties = Property.objects.all()  # Obtener todas las propiedades
+
+    landlord_id = request.GET.get('landlord_id', '')
+
+    if landlord_id:
+        properties = properties.filter(landlord_id = landlord_id)
+
     serializer = PropertiesListSerializer(properties, many=True)  # Serializar múltiples propiedades
 
     return JsonResponse({
